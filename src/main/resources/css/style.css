@@ -1,0 +1,70 @@
+/* style.css */
+
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* Buttons in sidebar */
+.button {
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #3b5998;
+}
+
+/* Header */
+.hbox {
+    -fx-alignment: center-left;
+}
+
+/* Sidebar */
+.vbox {
+    -fx-alignment: top-left;
+}
+
+/* Dashboard label */
+.label {
+    -fx-font-weight: bold;
+}
+
+/* Logout button style */
+.button:focused {
+    -fx-background-color: #c0392b;
+}
+
+.text-field, .password-field {
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 8;
+    -fx-background-insets: 0;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #2980b9;
+}
+
+.button {
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-opacity: 0.8;
+}
+
+.label {
+    -fx-font-family: "Helvetica Neue", sans-serif;
+    -fx-font-weight: normal;
+}
+
+.button {
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-opacity: 0.8;
+}
+
+.label {
+    -fx-font-family: "Segoe UI", sans-serif;
+}
