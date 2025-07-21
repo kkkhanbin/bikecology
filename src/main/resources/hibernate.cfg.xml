@@ -1,0 +1,17 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.autocommit">true</property>
+        <property name="show_sql">true</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.SQLiteDialect</property>
+        <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
+
+        <!-- Assume test is the database name -->
+        <property name="hibernate.connection.url">jdbc:sqlite:/src/main/resources/database/database.db</property>
+        <mapping class="kz.bikecology.data.models.source.Source"/>
+
+        <!-- List of XML mapping files -->
+    </session-factory>
+</hibernate-configuration>

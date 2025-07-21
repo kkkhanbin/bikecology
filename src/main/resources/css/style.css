@@ -1,70 +1,46 @@
-/* style.css */
-
-.root {
-    -fx-font-family: "Segoe UI", sans-serif;
+.sidebar {
+    -fx-background-color: #2c3e50;
 }
 
-/* Buttons in sidebar */
-.button {
-    -fx-background-radius: 6;
-    -fx-cursor: hand;
+.sidebar-btn {
+    -fx-background-color: Transparent;
+    -fx-border-color: white;
+    -fx-border-width: 4px;
 }
 
-.button:hover {
-    -fx-background-color: #3b5998;
+.combo-box {
+    -fx-background-color: Transparent;
+    -fx-border-color: #dedede;
+    -fx-border-radius: 4px;
 }
 
-/* Header */
-.hbox {
-    -fx-alignment: center-left;
+.combo-box:hover {
+    -fx-background-color: #dedede;
 }
 
-/* Sidebar */
-.vbox {
-    -fx-alignment: top-left;
+.btn {
+    -fx-background-color: Transparent;
+    -fx-border-color: white;
 }
 
-/* Dashboard label */
-.label {
-    -fx-font-weight: bold;
+.btn:hover {
+    -fx-background-color: #dedede;
 }
 
-/* Logout button style */
-.button:focused {
-    -fx-background-color: #c0392b;
+.sidebar-btn:hover {
+    -fx-background-color: #dedede;
 }
 
-.text-field, .password-field {
-    -fx-border-color: #bdc3c7;
-    -fx-border-radius: 8;
-    -fx-background-insets: 0;
+.sidebar-btn.selected {
+    -fx-border-color: white #38DE00 white white;
 }
 
-.text-field:focused, .password-field:focused {
-    -fx-border-color: #2980b9;
+.toggle-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
 }
 
-.button {
-    -fx-cursor: hand;
-}
-
-.button:hover {
-    -fx-opacity: 0.8;
-}
-
-.label {
-    -fx-font-family: "Helvetica Neue", sans-serif;
-    -fx-font-weight: normal;
-}
-
-.button {
-    -fx-cursor: hand;
-}
-
-.button:hover {
-    -fx-opacity: 0.8;
-}
-
-.label {
-    -fx-font-family: "Segoe UI", sans-serif;
+.main-tab {
+    -fx-background-color: #ecf0f1;
 }

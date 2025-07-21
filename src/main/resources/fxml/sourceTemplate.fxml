@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="mainPane" prefHeight="522.0" prefWidth="704.0" stylesheets="@/css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kz.bikecology.controllers.MainController">
+
+    <!-- COLLAPSIBLE SIDEBAR -->
+    <left>
+        <VBox fx:id="sidebar" alignment="TOP_CENTER" prefHeight="447.0" prefWidth="170.0" spacing="10" styleClass="sidebar">
+            <padding><Insets bottom="10" left="10" right="10" top="20" /></padding>
+
+            <Button fx:id="btnDashboard" onAction="#onSidebarClick" styleClass="sidebar-btn" text="🏠 Dashboard" />
+            <Button fx:id="btnReports" onAction="#onSidebarClick" prefHeight="25.0" prefWidth="98.0" styleClass="sidebar-btn" text="📊 Reports" textAlignment="JUSTIFY" />
+            <Button fx:id="btnSettings" alignment="TOP_LEFT" onAction="#onSidebarClick" styleClass="sidebar-btn" text="⚙️ Settings" />
+
+            <Button fx:id="toggleBtn" onAction="#toggleSidebar" styleClass="toggle-btn" text="⇔" />
+        </VBox>
+    </left>
+
+    <center>
+        <TabPane fx:id="tabPane" styleClass="main-tab" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Welcome">
+                    <Label prefWidth="292.0" styleClass="tab-label" text="Welcome to your beautiful app!" />
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+</BorderPane>

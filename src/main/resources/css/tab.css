@@ -1,0 +1,39 @@
+.downloadReportBtn {
+    -fx-background-color: white;
+    -fx-border-color: #dedede;
+    -fx-border-radius: 5px;
+}
+
+.downloadReportBtn:hover {
+    -fx-background-color: #dedede;
+}
+
+.table-view {
+    -fx-border-color: #dedede;
+    -fx-table-cell-border-color: #dedede;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #0078d7;
+    -fx-text-fill: white;
+}
+
+.saveFuelChangesBtn {
+    -fx-background-color: white;
+    -fx-border-color: #dedede;
+    -fx-border-radius: 5px;
+}
+
+.saveFuelChangesBtn:hover {
+    -fx-background-color: #dedede;
+}
+
+.table-view {
+    -fx-border-color: #dedede;
+    -fx-table-cell-border-color: #dedede;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #0078d7;
+    -fx-text-fill: white;
+}

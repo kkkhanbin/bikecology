@@ -1,54 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
-<BorderPane stylesheets="@../css/style.css" prefWidth="900" prefHeight="600"
-            style="-fx-background-color: #ffffff;">
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-   <!-- Header -->
-   <top>
-      <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #f8f8f8;">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="559.0" prefWidth="815.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kz.bikecology.controllers.MainController">
+    <columnConstraints>
+        <ColumnConstraints maxWidth="1.7976931348623157E308" />
+        <ColumnConstraints />
+        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="418.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints vgrow="ALWAYS" />
+    </rowConstraints>
+    <VBox maxHeight="1.7976931348623157E308" style="-fx-background-color: white; -fx-border-color: white black white white;">
+        <padding>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+        </padding>
+        <Button contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleSidebar" prefHeight="37.0" prefWidth="37.0" styleClass="btn" text="☰" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="15.0" />
+            </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+        </Button>
+    </VBox>
+    <VBox fx:id="sidebar" prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: white; -fx-border-color: white black white white;" GridPane.columnIndex="1">
+              <padding>
+            <Insets bottom="3.0" top="3.0" />
+        </padding>
+      <Button fx:id="btnEnterprise" alignment="BASELINE_LEFT" minWidth="-Infinity" mnemonicParsing="false" onAction="#setEnterpriseContent" prefHeight="37.0" prefWidth="197.0" styleClass="sidebar-btn" text="📃 Предприятие">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <VBox.margin>
+            <Insets bottom="3.0" top="3.0" />
+         </VBox.margin>
+         <rotationAxis>
+            <Point3D />
+         </rotationAxis>
          <padding>
-            <Insets top="30" right="30" bottom="30" left="30" />
+            <Insets left="10.0" />
          </padding>
-         <Label text="Minimal Dashboard" style="-fx-font-size: 20px; -fx-text-fill: #2c3e50;" />
-      </HBox>
-   </top>
-
-   <!-- Sidebar -->
-   <left>
-      <VBox spacing="10" style="-fx-background-color: #f4f4f4;" prefWidth="200">
-         <Button text="Home" style="-fx-background-color: transparent; -fx-text-fill: #2c3e50;" />
-         <Button text="Analytics" style="-fx-background-color: transparent; -fx-text-fill: #2c3e50;" />
-         <Button text="Settings" style="-fx-background-color: transparent; -fx-text-fill: #2c3e50;" />
-      </VBox>
-   </left>
-
-   <!-- Main Content -->
-   <center>
-      <VBox alignment="TOP_CENTER" spacing="30">
-         <Label text="Welcome to your dashboard" style="-fx-font-size: 24px; -fx-text-fill: #2c3e50;" />
-
-         <HBox spacing="20">
-            <VBox style="-fx-background-color: #ecf0f1; -fx-background-radius: 6;" spacing="10" prefWidth="200">
-               <Label text="Users" style="-fx-font-size: 16px;" />
-               <Label text="1245" style="-fx-font-size: 20px; -fx-text-fill: #27ae60;" />
-            </VBox>
-
-            <VBox style="-fx-background-color: #ecf0f1; -fx-background-radius: 6;" spacing="10" prefWidth="200">
-               <Label text="Sales" style="-fx-font-size: 16px;" />
-               <Label text="13450" style="-fx-font-size: 20px; -fx-text-fill: #2980b9;" />
-            </VBox>
-         </HBox>
-
-         <Button text="Refresh Data" style="
-                -fx-background-color: #2c3e50;
-                -fx-text-fill: white;
-                -fx-padding: 10 20;
-                -fx-background-radius: 4;" />
-      </VBox>
-   </center>
-
-</BorderPane>
+      </Button>
+        <Button fx:id="btnWorks" alignment="BASELINE_LEFT" minWidth="-Infinity" mnemonicParsing="false" onAction="#setWorksContent" prefHeight="37.0" prefWidth="197.0" styleClass="sidebar-btn" text="📎 Проводимые работы">
+            <VBox.margin>
+                <Insets bottom="3.0" />
+            </VBox.margin>
+            <font>
+                <Font name="Arial" size="13.0" />
+            </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <rotationAxis>
+            <Point3D />
+         </rotationAxis>
+         <padding>
+            <Insets left="8.0" />
+         </padding>
+        </Button>
+      <Button fx:id="btnReport" alignment="BASELINE_LEFT" minWidth="-Infinity" mnemonicParsing="false" onAction="#setReportContent" prefHeight="37.0" prefWidth="197.0" styleClass="sidebar-btn" text="📋 Отчетность">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <VBox.margin>
+            <Insets bottom="3.0" />
+         </VBox.margin>
+         <rotationAxis>
+            <Point3D />
+         </rotationAxis>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </Button>
+   </VBox>
+   <StackPane fx:id="contentPane" maxWidth="1.7976931348623157E308" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2">
+      <children>
+         <BorderPane maxWidth="1.7976931348623157E308">
+            <center>
+               <Label alignment="CENTER" prefHeight="80.0" prefWidth="309.0" text="Откройте любую вкладку" BorderPane.alignment="CENTER">
+                  <font>
+                     <Font name="Arial" size="24.0" />
+                  </font>
+                  <graphic>
+                     <Label alignment="CENTER" prefHeight="80.0" prefWidth="309.0" text="Откройте любую вкладку">
+                        <font>
+                           <Font name="Arial" size="24.0" />
+                        </font>
+                     </Label>
+                  </graphic>
+               </Label>
+            </center>
+         </BorderPane>
+      </children>
+   </StackPane>
+</GridPane>

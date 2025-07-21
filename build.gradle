@@ -16,6 +16,17 @@ ext {
 
 dependencies {
     implementation "org.openjfx:javafx-web:$javafxVersion"
+    implementation "org.hibernate.orm:hibernate-core:7.0.3.Final"
+    implementation "org.hibernate:hibernate-validator:6.2.0.CR1"
+    implementation 'org.xerial:sqlite-jdbc:3.41.2.2'
+    implementation 'org.hibernate.orm:hibernate-community-dialects:6.4.1.Final'
+    implementation 'javax.persistence:javax.persistence-api:2.2'
+    implementation 'org.controlsfx:controlsfx:11.1.2'
+
+    implementation 'org.apache.poi:poi-ooxml:5.4.0'
+    implementation 'org.apache.poi:poi:5.2.3'            // Базовая библиотека (для .xls)
+    implementation 'org.apache.commons:commons-collections4:4.4' // Иногда требуется
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
 }
 
 // Set JavaFX modules required
