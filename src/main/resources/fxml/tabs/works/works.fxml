@@ -149,7 +149,7 @@
       </HBox>
    </top>
    <stylesheets>
-      <URL value="@../../css/style.css" />
-      <URL value="@../../css/tab.css" />
+      <URL value="@../../../css/style.css" />
+      <URL value="@../../../css/tab.css" />
    </stylesheets>
 </BorderPane>

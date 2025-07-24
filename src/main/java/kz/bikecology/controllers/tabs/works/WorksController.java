@@ -146,22 +146,10 @@ public class WorksController extends BaseController {
         quarterChoiceBox.setValue(getCurrentQuarter());
         quarterChoiceBox.setOnHidden(event -> { updateFuelsPane(); });
 
-
         for (int i = 2020; i <= Year.now().getValue(); i++) {
             yearChoiceBox.getItems().addAll(i);
         }
         yearChoiceBox.setValue(getCurrentYear());
-        yearChoiceBox.setOnHidden(event -> { updateFuelsPane(); });
-    }
-
-    public int getCurrentQuarter() {
-        LocalDate today = LocalDate.now();
-        int month = today.getMonthValue();
-
-        return (month - 1) / 3 + 1;
-    }
-
-    public int getCurrentYear() {
-        return Year.now().getValue();
+        yearChoiceBox.setOnHidden(_ -> { updateFuelsPane(); });
     }
 }

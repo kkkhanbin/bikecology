@@ -19,8 +19,13 @@
 }
 
 .btn {
-    -fx-background-color: Transparent;
-    -fx-border-color: white;
+    -fx-background-color: white;
+    -fx-border-color: #dedede;
+    -fx-border-radius: 5px;
+}
+
+.toggle-sidebar-btn:hover {
+    -fx-background-color: #dedede;
 }
 
 .btn:hover {

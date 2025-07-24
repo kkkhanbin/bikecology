@@ -1,145 +1,157 @@
 package kz.bikecology.controllers.tabs.report;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.stage.FileChooser;
 import kz.bikecology.controllers.BaseController;
 import kz.bikecology.data.models.facility.Facility;
 import kz.bikecology.data.models.record.Record;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.controlsfx.control.CheckComboBox;
 
-import java.io.File;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.prefs.Preferences;
 
 public class ReportController extends BaseController {
-    private static final Logger log = LogManager.getLogger(ReportController.class);
-    Preferences prefs = Preferences.userNodeForPackage(getClass());
-    String defaultDownloadDir = System.getProperty("user.home") + File.separator + "Downloads";
-
-    @FXML private Button downloadReportBtn;
-
     // filters
-    @FXML private HBox placeForFacilityFilter;
-    @FXML private HBox placeForQuarterFilter;
-    @FXML private HBox placeForYearFilter;
+    @FXML ChoiceBox<Integer> quarterFilter;
+    @FXML ChoiceBox<Integer> yearFilter;
 
-    CheckComboBox<Facility> facilityFilter = new CheckComboBox<>();
-    CheckComboBox<Integer> quarterFilter = new CheckComboBox<>();
-    CheckComboBox<Integer> yearFilter = new CheckComboBox<>();
+    @FXML Label statusBar;
 
     // available reports
-    @FXML private TableView<Record> availableReportsTable;
+    @FXML private TableView<ReportReadyFacility> availableReportsTable;
 
-    @FXML private TableColumn<Record, Facility> facilityCol;
-    @FXML private TableColumn<Record, Integer> quarterCol;
-    @FXML private TableColumn<Record, Integer> yearCol;
+    @FXML private TableColumn<ReportReadyFacility, Boolean> selectCol;
+    @FXML private TableColumn<ReportReadyFacility, Facility> facilityCol;
 
     @FXML
     public void initialize() {
         loadFilters();
-
-        facilityCol.setCellValueFactory(new PropertyValueFactory<>("facility"));
-        quarterCol.setCellValueFactory(new PropertyValueFactory<>("quarter"));
-        yearCol.setCellValueFactory(new PropertyValueFactory<>("year"));
+        loadAvailableReportsColumns();
     }
 
     public void loadFilters() {
-        Runnable onSelectionChanged = this::updateReportsPane;
-
-        for (Facility facility : facilityDAO.getAll()) {
-            facilityFilter.getItems().addAll(facility);
-        }
-        facilityFilter.setPrefWidth(10000);
-        facilityFilter.getStyleClass().addAll("combo-box");
-        facilityFilter.getCheckModel().getCheckedItems().addListener((ListChangeListener<Facility>) _ -> {
-            onSelectionChanged.run();
-        });
-        placeForFacilityFilter.getChildren().setAll(facilityFilter);
-
+        quarterFilter.setOnHidden(_ -> { updateReportsPane(); });
         quarterFilter.getItems().addAll(1, 2, 3, 4);
-        quarterFilter.setPrefWidth(10000);
-        quarterFilter.getStyleClass().addAll("combo-box");
-        quarterFilter.getCheckModel().getCheckedItems().addListener((ListChangeListener<Integer>) _ -> {
-            onSelectionChanged.run();
-        });
-        placeForQuarterFilter.getChildren().setAll(quarterFilter);
+        quarterFilter.setValue(getCurrentQuarter());
 
+        yearFilter.setOnHidden(_ -> { updateReportsPane(); });
         for (int i = 2020; i <= Year.now().getValue(); i++) {
             yearFilter.getItems().addAll(i);
         }
-        yearFilter.setPrefWidth(10000);
-        yearFilter.getStyleClass().addAll("combo-box");
-        yearFilter.getCheckModel().getCheckedItems().addListener((ListChangeListener<Integer>) _ -> {
-            onSelectionChanged.run();
+        yearFilter.setValue(getCurrentYear());
+
+        updateReportsPane();
+    }
+
+    public void loadAvailableReportsColumns() {
+        // Boolean checkbox configuration
+        CheckBox selectAllCheckBox = new CheckBox();
+        selectAllCheckBox.setOnAction(_ -> {
+            for (ReportReadyFacility facility : availableReportsTable.getItems()) {
+                facility.setSelected(selectAllCheckBox.isSelected());
+            }
+
+            availableReportsTable.refresh();
         });
-        placeForYearFilter.getChildren().setAll(yearFilter);
+        selectAllCheckBox.setSelected(true);
+        selectCol.setGraphic(selectAllCheckBox);
+        selectCol.setEditable(true);
+        selectCol.setCellValueFactory(cellData -> {
+            ReportReadyFacility facility = cellData.getValue();
+
+            BooleanProperty selected = new SimpleBooleanProperty(facility.isSelected());
+
+            selected.addListener((_, _, isNowSelected) -> {
+                statusBar.setText("Производственные объекты, имеющие достаточно информации по проводимым работам для отчёта");
+                facility.setSelected(isNowSelected);
+            });
+
+            return selected;
+        });
+        selectCol.setCellFactory(_ -> new CheckBoxTableCell<>());
+
+        facilityCol.setCellValueFactory(new PropertyValueFactory<>("facility"));
+
+        availableReportsTable.setPlaceholder(new Label("Доступных отчетов не найдено."));
+        availableReportsTable.setEditable(true);
     }
 
     public void updateReportsPane() {
-        List<Integer> facilityIds = facilityFilter.getCheckModel().getCheckedItems().stream().map(Facility::getId).toList();
-        List<Integer> quarters = new ArrayList<>(quarterFilter.getCheckModel().getCheckedItems());
-        List<Integer> years = new ArrayList<>(yearFilter.getCheckModel().getCheckedItems());
+        availableReportsTable.setItems(FXCollections.observableArrayList()); // clearing table
+        if (quarterFilter.getValue() == null || yearFilter.getValue() == null) { return; }
 
-        availableReportsTable.setItems(FXCollections.observableArrayList()); // clear table
-        if (facilityIds.isEmpty() || quarters.isEmpty() || years.isEmpty()) {
+        int quarter = quarterFilter.getValue();
+        int year = yearFilter.getValue();
+
+        availableReportsTable.setItems(FXCollections.observableArrayList(getReportReadyFacilities(quarter, year)));
+    }
+
+    @FXML
+    public void showChoosingReportTypeWindow(ActionEvent event) throws IOException {
+        List<Facility> selectedFacilities = availableReportsTable.getItems().stream().filter(ReportReadyFacility::isSelected).map(ReportReadyFacility::getFacility).toList();
+
+        if (selectedFacilities.isEmpty()) {
+            statusBar.setText("Выберите минимум 1 производственный объект");
             return;
         }
 
-        List<Record> allRecords = recordDAO.getByFacilityQuarterAndYear(facilityIds, quarters, years);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/tabs/report/chooseReportTypeWindow.fxml"));
+        Parent root = loader.load();
+
+        ChooseReportTypeWindowController controller = loader.getController();
+        controller.setFacilities(selectedFacilities);
+        controller.setQuarter(quarterFilter.getValue());
+        controller.setYear(yearFilter.getValue());
+        controller.loadReportDataText();
+
+        Stage stage = new Stage();
+        stage.setTitle("Выбор типа отчёта");
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+
+        stage.setOnHidden(_ -> {  });
+    }
+
+    public List<ReportReadyFacility> getReportReadyFacilities(int quarter, int year) {
+        List<Record> allRecords = recordDAO.getByQuarterAndYear(quarter, year);
 
         // stage 1 - getting rid of reports without enough allRecords
-        HashMap<List<Integer>, List<Integer>> matchingFuels = new HashMap<>();
+        HashMap<Integer, List<Integer>> matchingFuels = new HashMap<>();
         for (Record record : allRecords) {
-            List<Integer> key = List.of(record.getFacility().getId(), record.getQuarter(), record.getYear());
-            if (!matchingFuels.containsKey(key)) {
-                matchingFuels.put(key, List.of(record.getFuel().getId()));
+            Integer facilityId = record.getFacility().getId();
+            if (!matchingFuels.containsKey(facilityId)) {
+                matchingFuels.put(facilityId, List.of(record.getFuel().getId()));
             } else {
                 List<Integer> addedFuel = new ArrayList<>(List.of(record.getFuel().getId()));
-                addedFuel.addAll(matchingFuels.get(key));
-                matchingFuels.put(key, addedFuel);
+                addedFuel.addAll(matchingFuels.get(facilityId));
+                matchingFuels.put(facilityId, addedFuel);
             }
         }
 
         // stage 2 - structuring data
-        List<Record> filteredRecords = new ArrayList<>(List.of());
-        for (List<Integer> key : matchingFuels.keySet()) {
-            if (facilityFuelsDAO.getByFacilityId(key.getFirst()).size() == matchingFuels.get(key).size()) {
-                filteredRecords.add(recordDAO.getByFacilityQuarterAndYear(key.getFirst(), key.get(1), key.getLast()).getFirst());
+        List<ReportReadyFacility> reportReadyFacilities = new ArrayList<>(List.of());
+        for (Integer facilityId : matchingFuels.keySet()) {
+            if (facilityFuelsDAO.getByFacilityId(facilityId).size() == matchingFuels.get(facilityId).size()) {
+                ReportReadyFacility reportReadyFacility = new ReportReadyFacility(true, facilityDAO.getById(facilityId));
+                reportReadyFacilities.add(reportReadyFacility);
             }
         }
 
-        availableReportsTable.setItems(FXCollections.observableArrayList(filteredRecords));
-        availableReportsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-    }
-
-    @FXML
-    public void downloadReport(ActionEvent event) throws IOException {
-        int quarter = 2;
-        int year = 2025;
-
-        String filename = String.format("Отчёт Кокпекты за %d квартал %d года.xlsx", quarter, year);
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Сохранить отчёт в...");
-        fileChooser.setInitialFileName(filename);
-        fileChooser.setInitialDirectory(new File(prefs.get("lastDir", defaultDownloadDir)));
-
-        File file = fileChooser.showSaveDialog(downloadReportBtn.getScene().getWindow());
-
-        prefs.put("lastDir", file.getParentFile().getAbsolutePath());
-
-        reportBuilder.build(file.getAbsolutePath(), 2, 2025); // TODO delete mock
+        return reportReadyFacilities;
     }
 }

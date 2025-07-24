@@ -26,9 +26,9 @@ public class MainController extends BaseController {
 
     @FXML
     public void initialize() throws IOException {
-        worksTab = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/tabs/works.fxml")));
-        reportTab = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/tabs/report.fxml")));
-        enterpriseTab = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/tabs/enterprise.fxml")));
+        worksTab = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/tabs/works/works.fxml")));
+        reportTab = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/tabs/report/report.fxml")));
+        enterpriseTab = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/tabs/enterprise/enterprise.fxml")));
 
         btnEnterprise.getStyleClass().add("selected");
         contentPane.getChildren().setAll(enterpriseTab);
