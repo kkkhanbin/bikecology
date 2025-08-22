@@ -28,6 +28,11 @@
     -fx-background-color: #dedede;
 }
 
+.toggle-sidebar-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
 .btn:hover {
     -fx-background-color: #dedede;
 }

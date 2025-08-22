@@ -1,22 +1,25 @@
 package kz.bikecology.controllers.tabs.report;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import kz.bikecology.data.models.facility.Facility;
 
 public class ReportReadyFacility {
-    private Boolean selected;
+    private final BooleanProperty selected = new SimpleBooleanProperty(true);
     private Facility facility;
 
-    public ReportReadyFacility(Boolean selected, Facility facility) {
-        this.selected = selected;
+    public ReportReadyFacility(Facility facility) {
         this.facility = facility;
     }
 
+    public BooleanProperty selectedProperty() { return this.selected; }
+
     public Boolean isSelected() {
-        return this.selected;
+        return this.selected.get();
     }
 
     public void setSelected(Boolean selected) {
-        this.selected = selected;
+        this.selected.set(selected);
     }
 
     public Facility getFacility() {

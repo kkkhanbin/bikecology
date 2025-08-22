@@ -19,16 +19,19 @@ public class MainController extends BaseController {
     @FXML private Button btnEnterprise;
     @FXML private Button btnWorks;
     @FXML private Button btnReport;
+    @FXML private Button btnLimit;
 
     @FXML private BorderPane enterpriseTab;
     @FXML private BorderPane worksTab;
     @FXML private BorderPane reportTab;
+    @FXML private BorderPane limitTab;
 
     @FXML
     public void initialize() throws IOException {
         worksTab = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/tabs/works/works.fxml")));
         reportTab = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/tabs/report/report.fxml")));
         enterpriseTab = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/tabs/enterprise/enterprise.fxml")));
+        limitTab = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/tabs/limit/limit.fxml")));
 
         btnEnterprise.getStyleClass().add("selected");
         contentPane.getChildren().setAll(enterpriseTab);
@@ -65,13 +68,19 @@ public class MainController extends BaseController {
         contentPane.getChildren().setAll(enterpriseTab);
     }
 
+    @FXML
+    public void setLimitContent(ActionEvent event) {
+        setSelectedSidebarBtn((Button) event.getSource());
+        contentPane.getChildren().setAll(limitTab);
+    }
+
     protected void setSelectedSidebarBtn(Button clicked) {
         getSidebarBtns().forEach(btn -> btn.getStyleClass().remove("selected"));
         clicked.getStyleClass().add("selected");
     }
 
     protected List<Button> getSidebarBtns() {
-        List<Button> sidebarBtns = List.of(btnReport, btnWorks, btnEnterprise);
+        List<Button> sidebarBtns = List.of(btnReport, btnWorks, btnEnterprise, btnLimit);
         return sidebarBtns;
     }
 }

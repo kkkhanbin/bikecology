@@ -40,6 +40,14 @@ public class RecordDAO extends BaseDAO {
         tr.commit();
     }
 
+    public List<Record> getByYear(int year) {
+        String hql = "FROM Record WHERE year = :year";
+        Query<Record> query = session.createQuery(hql, Record.class);
+        query.setParameter("year", year);
+
+        return query.getResultList();
+    }
+
     public List<Record> getByQuarterAndYear(int quarter, int year) {
         String hql = "FROM Record WHERE quarter = :quarter AND year = :year";
         Query<Record> query = session.createQuery(hql, Record.class);

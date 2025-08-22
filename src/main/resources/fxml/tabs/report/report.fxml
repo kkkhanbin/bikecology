@@ -25,11 +25,11 @@
            </columnConstraints>
            <rowConstraints>
                <RowConstraints maxHeight="56.0" minHeight="56.0" prefHeight="49.0" vgrow="SOMETIMES" />
-               <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="67.0" vgrow="SOMETIMES" />
-               <RowConstraints maxHeight="1.7976931348623157E308" minHeight="6.0" prefHeight="528.0" vgrow="SOMETIMES" />
+               <RowConstraints maxHeight="121.0" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
+               <RowConstraints maxHeight="1.7976931348623157E308" minHeight="6.0" prefHeight="631.0" vgrow="SOMETIMES" />
                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="46.0" vgrow="SOMETIMES" />
            </rowConstraints>
-           <GridPane prefHeight="0.0" prefWidth="909.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+           <GridPane prefHeight="94.0" prefWidth="909.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <columnConstraints>
                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="311.0" minWidth="90.0" prefWidth="187.0" />
                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="744.0" />
@@ -37,6 +37,7 @@
                <rowConstraints>
                    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="33.0" vgrow="ALWAYS" />
                    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="33.0" vgrow="SOMETIMES" />
+               <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="187.0">
                    <padding>
@@ -75,7 +76,10 @@
                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                    </padding>
                    <children>
-                       <ChoiceBox fx:id="quarterFilter" prefHeight="25.0" prefWidth="976.0" styleClass="combo-box" />
+                       <ChoiceBox fx:id="quarterFilter" prefHeight="25.0" prefWidth="976.0" styleClass="combo-box">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ChoiceBox>
                    </children>
                </HBox>
                <HBox fx:id="placeForYearFilter" fillHeight="false" prefHeight="17.0" prefWidth="755.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -83,9 +87,45 @@
                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                    </padding>
                    <children>
-                       <ChoiceBox fx:id="yearFilter" prefHeight="25.0" prefWidth="976.0" styleClass="combo-box" />
+                       <ChoiceBox fx:id="yearFilter" prefHeight="25.0" prefWidth="976.0" styleClass="combo-box">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ChoiceBox>
                    </children>
                </HBox>
+            <HBox fillHeight="false" prefHeight="0.0" prefWidth="168.0" GridPane.rowIndex="2">
+               <children>
+                  <Label contentDisplay="CENTER" prefHeight="27.0" prefWidth="143.0" text="Тип отчёта">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+               </padding>
+            </HBox>
+            <HBox fx:id="placeForYearFilter1" fillHeight="false" prefHeight="17.0" prefWidth="755.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <padding>
+                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+               </padding>
+               <children>
+                  <ChoiceBox fx:id="reportTypeFilter" prefHeight="25.0" prefWidth="976.0" styleClass="combo-box">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ChoiceBox>
+               </children>
+            </HBox>
            </GridPane>
            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="531.0" GridPane.columnIndex="1">
               <children>
@@ -96,16 +136,32 @@
                   </Label>
               </children>
            </HBox>
-         <VBox maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <VBox maxHeight="1.7976931348623157E308" prefHeight="617.0" prefWidth="909.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <children>
-               <Label fx:id="statusBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="Производственные объекты, имеющие достаточно информации по проводимым работам для отчёта">
+               <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="200.0">
+                  <children>
+                     <Label fx:id="statusBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="Производственные объекты, имеющие достаточно информации по проводимым работам для отчёта">
+                        <font>
+                           <Font name="Arial Italic" size="12.0" />
+                        </font>
+                     </Label>
+                     <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="236.0" HBox.hgrow="ALWAYS">
+                        <children>
+                           <Button fx:id="refreshBtn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#updateReportsPane" styleClass="btn" text="🔄">
+                              <font>
+                                 <Font name="System Bold" size="10.0" />
+                              </font>
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor>
+                           </Button>
+                        </children>
+                     </HBox>
+                  </children>
                   <VBox.margin>
                      <Insets bottom="5.0" />
                   </VBox.margin>
-                  <font>
-                     <Font name="Arial Italic" size="12.0" />
-                  </font>
-               </Label>
+               </HBox>
                   <TableView fx:id="availableReportsTable" maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefHeight="373.0" prefWidth="300.0" styleClass="table" VBox.vgrow="ALWAYS">
                       <columns>
                           <TableColumn fx:id="selectCol" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="41.0" />
@@ -119,7 +175,12 @@
          </VBox>
            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
               <children>
-                  <Button fx:id="downloadReportBtn" alignment="CENTER" contentDisplay="RIGHT" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showChoosingReportTypeWindow" prefHeight="38.0" prefWidth="136.0" styleClass="downloadReportBtn" stylesheets="@../../../css/tab.css" text="Скачать">
+               <Label fx:id="chosenFacilitiesAmountLabel" text="Выбрано производственных объектов: 0.">
+                  <HBox.margin>
+                     <Insets right="5.0" />
+                  </HBox.margin>
+               </Label>
+                  <Button fx:id="downloadReportBtn" alignment="CENTER" contentDisplay="RIGHT" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#downloadReport" prefHeight="38.0" prefWidth="136.0" styleClass="downloadReportBtn" stylesheets="@../../../css/tab.css" text="Скачать отчёт">
                       <font>
                           <Font name="Arial" size="13.0" />
                       </font>

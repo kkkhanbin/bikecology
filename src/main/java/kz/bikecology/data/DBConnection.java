@@ -4,6 +4,8 @@ import kz.bikecology.data.models.facilityFuels.FacilityFuels;
 import kz.bikecology.data.models.feeRates.FeeRate;
 import kz.bikecology.data.models.fuel.Fuel;
 import kz.bikecology.data.models.facility.Facility;
+import kz.bikecology.data.models.limit.Limit;
+import kz.bikecology.data.models.pollutant.Pollutant;
 import kz.bikecology.data.models.record.Record;
 import kz.bikecology.data.models.region.Region;
 import kz.bikecology.data.models.source.Source;
@@ -30,7 +32,9 @@ public class DBConnection {
                 .addAnnotatedClass(Fuel.class)
                 .addAnnotatedClass(Region.class)
                 .addAnnotatedClass(Facility.class)
-                .addAnnotatedClass(FacilityFuels.class);
+                .addAnnotatedClass(FacilityFuels.class)
+                .addAnnotatedClass(Pollutant.class)
+                .addAnnotatedClass(Limit.class);
 
         sessionFactory = cfg.buildSessionFactory();
     }

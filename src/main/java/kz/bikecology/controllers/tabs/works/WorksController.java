@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -20,6 +21,7 @@ import kz.bikecology.data.models.facilityFuels.FacilityFuels;
 import kz.bikecology.data.models.fuel.Fuel;
 import kz.bikecology.data.models.record.Record;
 
+import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
@@ -113,6 +115,7 @@ public class WorksController extends BaseController {
                 amountField.setText(oldText);
             }
         });
+        amountField.setOnKeyPressed(keyEvent -> { if (keyEvent.getCode().equals(KeyCode.ENTER)) { saveChanges(); } } );
 
         // fuel - search result
         Label savedAmount;
@@ -129,6 +132,7 @@ public class WorksController extends BaseController {
         savedAmount.setPrefSize(350, 30);
         savedAmount.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
         savedAmount.setPadding(new Insets(0, 0, 0, 5));
+
 
         hBox.getChildren().addAll(fuelName, amountField, savedAmount);
         fuelFields.addLast(new Pair<>(fuel, amountFieldId));

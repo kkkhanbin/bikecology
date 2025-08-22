@@ -1,9 +1,9 @@
-package kz.bikecology.services.reportBuilder;
+package kz.bikecology.services.report;
 
 public enum ReportType {
     STATISTICAL("Статистический отчёт"),
     IEC("Отчет ПЭК"),
-    EXPLANATORY_NOTES("Пояснительная записка");
+    TAX("Налоговый отчёт");
 
     private final String label;
 
